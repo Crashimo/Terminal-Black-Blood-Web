@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>† BLACK BLOOD TERMINAL †</title>
+    
+    <link rel="icon" type="image/gif" href="https://i10.glitter-graphics.org/pub/864/864430nt3rjqlypa.gif">
+    
+    <style>
+        * { 
+            cursor: url(https://cur.cursors-4u.net/holidays/hol-4/hol338.cur), auto !important; 
+            box-sizing: border-box; /* Crucial para que el padding no rompa el ancho en móvil */
+        }
+
+        /* --- 1. LLUVIA DE MURCIÉLAGOS --- */
+        @keyframes snowflakes-fall { 0% { top: -10%; } 100% { top: 100%; } }
+        @keyframes snowflakes-shake { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(80px); } }
+        .snowflake {
+            position: fixed; top: -10%; z-index: 9999; user-select: none;
+            animation-name: snowflakes-fall, snowflakes-shake;
+            animation-duration: 10s, 3s; animation-timing-function: linear, ease-in-out;
+            animation-iteration-count: infinite, infinite; display: none;
+        }
+        .snowflake img { width: 40px; }
+
+        /* --- 2. CARGA INICIAL --- */
+        #initial-loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 20000;
+            transition: opacity 0.5s ease;
+        }
+        #initial-loader img { width: 300px; max-width: 80%; height: auto; border: 2px solid #301934; }
+        #initial-loader p { color: #fff; font-family: "Courier New", monospace; margin-top: 15px; letter-spacing: 2px; text-align: center; }
+
+        /* --- 3. EL TROLEO --- */
+        #troll-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000; display: none;
+            flex-direction: column; justify-content: center; align-items: center;
+            z-index: 18000; transition: opacity 0.5s ease;
+        }
+        #troll-screen img { width: 500px; max-width: 90%; border: 5px solid #8b0000; box-shadow: 0px 0px 30px #8b0000; }
+        #troll-screen p { color: #8b0000; font-family: "Impact", sans-serif; font-size: 2em; margin-top: 10px; text-transform: uppercase; animation: blink 0.5s infinite; text-align: center; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* --- 4. ADVERTENCIA --- */
+        #warning-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000; display: none; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 15000;
+            transition: opacity 0.5s ease; padding: 20px;
+        }
+        #warning-img { width: 700px; max-width: 95%; height: auto; border: 8px ridge #000; margin-bottom: 30px; }
+        #continue-btn { background-color: #000; color: #8b0000; border: 2px outset #301934; padding: 15px 40px; font-family: "Courier New", monospace; font-weight: bold; font-size: 1.1em; text-transform: uppercase; box-shadow: 0px 0px 15px #301934; cursor: pointer; }
+
+        /* --- 5. PERFIL --- */
+        body { margin: 0; padding: 0; background-color: #000; display: flex; justify-content: center; padding-top: 20px; font-family: "Courier New", Courier, monospace; min-height: 100vh; overflow-x: hidden; }
+        
+        .content-container { 
+            opacity: 0; visibility: hidden; transition: opacity 1.5s ease; 
+            text-align: center; width: 90%; max-width: 900px;
+            background: url('https://i.pinimg.com/564x/b5/6e/b6/b56eb6f5026caa11060548947978595f.jpg') !important; 
+            padding: 20px; border: 2px solid #301934; box-shadow: 0px 0px 15px #301934; 
+            margin-bottom: 50px; 
+        }
+        
+        h1 { font-family: "Garamond", Georgia, serif; font-size: clamp(1.8em, 8vw, 3.5em); color: #ffffff; text-shadow: 2px 2px 3px #000, 0 0 15px #301934; margin: 10px 0; }
+        .crona-header { width: 350px; max-width: 100%; border: 4px double #301934; filter: grayscale(1) contrast(1.2); box-shadow: 0px 0px 20px #000; margin-bottom: 15px; }
+        
+        /* Ajuste de pestañas para móvil */
+        .tabs-container { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; margin-top: 10px; }
+        .tab { background-color: #000; color: #fff; padding: 8px 15px; border: 1px solid #301934; font-weight: bold; flex: 1 1 auto; cursor: pointer; }
+        .tab.active { background-color: #301934; }
+        
+        #display-area { 
+            width: 100%; border: 1px solid #301934; padding: 15px; 
+            background-color: rgba(0, 0, 0, 0.9); min-height: 120px; 
+            color: white; margin-top: 10px; text-align: left; 
+            overflow-wrap: break-word; word-wrap: break-word; /* Evita que los links largos rompan el layout */
+        }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        /* Forzar que las imágenes no se salgan del contenedor */
+        img { max-width: 100%; height: auto; }
+
+        @media (max-width: 600px) {
+            body { padding-top: 5px; }
+            .content-container { width: 95%; padding: 10px; }
+            #display-area { padding: 10px; }
+            .tab { font-size: 0.8em; padding: 10px 5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="perfil-audio" loop>
+        <source src="https://files.catbox.moe/k1yw68.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="snowflakes">
+        <div class="snowflake"><img src="https://64.media.tumblr.com/c976c1f0110dff524dead5bde74dd5df/09b0656ab042c182-ac/s75x75_c1/888d378a91f5776307c5c5633ed9c5c7e094b4e5.gifv"></div>
+        <div class="snowflake"><img src="https://64.media.tumblr.com/c976c1f0110dff524dead5bde74dd5df/09b0656ab042c182-ac/s75x75_c1/888d378a91f5776307c5c5633ed9c5c7e094b4e5.gifv"></div>
+        <div class="snowflake"><img src="https://64.media.tumblr.com/c976c1f0110dff524dead5bde74dd5df/09b0656ab042c182-ac/s75x75_c1/888d378a91f5776307c5c5633ed9c5c7e094b4e5.gifv"></div>
+        <div class="snowflake"><img src="https://64.media.tumblr.com/c976c1f0110dff524dead5bde74dd5df/09b0656ab042c182-ac/s75x75_c1/888d378a91f5776307c5c5633ed9c5c7e094b4e5.gifv"></div>
+        <div class="snowflake"><img src="https://64.media.tumblr.com/c976c1f0110dff524dead5bde74dd5df/09b0656ab042c182-ac/s75x75_c1/888d378a91f5776307c5c5633ed9c5c7e094b4e5.gifv"></div>
+    </div>
+
+    <div id="initial-loader">
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExa3BieWlva3QwenFtdTFzMTNrcTR3OXFob3M4ajg3bzdjZnpnbnBqYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TrVla4Z2PYEkU/giphy.gif" alt="Cargando">
+        <p>Ingresando al Vacio Digital...</p>
+    </div>
+
+    <div id="troll-screen">
+        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMW1mbzN3ZWwzdzVia2FpczY5YWN6YzVkM2dwYmU5NjZmZGh6NGJ1NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/J9ywOs7DC5vJOpjJM6/giphy.gif" alt="Stay Warm Troll">
+        <p>ERROR: TROLEADO PAPU :V</p>
+    </div>
+
+    <div id="warning-screen">
+        <img id="warning-img" src="https://cdn.mobygames.com/screenshots/16862066-south-park-rally-nintendo-64-game-disclaimer.png">
+        <button id="continue-btn" onclick="enterProfile()">[ ACEPTAR RIESGO Y ENTRAR ]</button>
+    </div>
+
+    <div class="content-container" id="perfil-main">
+        <h1>†BLACK BLOOD TERMINAL†</h1>
+        <img src="https://a-static.besthdwallpaper.com/soul-eater-crona-wallpaper-1680x1050-69306_5.jpg" class="crona-header" alt="Crona">
+        <div class="tabs-container">
+            <button class="tab active" onclick="showTab('inicio')">INICIO</button>
+            <button class="tab" onclick="showTab('specs')">SETUP</button>
+            <button class="tab" onclick="showTab('linux')">EMU_CORE</button>
+            <button class="tab" onclick="showTab('arduino')">CONTACTO</button>
+        </div>
+        <div id="display-area">
+            <div id="inicio" class="tab-content active">
+                <h3>Nadie escucha... solo el zumbido de mi Intel I3...Bienvenido al vacio</h3>
+                <p>Hola a todos, bienvenidos a Black Blood Terminal esta es una pequeña pagina que cree porque me aburri y necesitaba bajar mis niveles de Cortisol. Por favor no leer o tomar en cuenta nada de lo que esta en esta pagina la mayoria de cosas estan escritas en un sentido de humor. <img src="https://64.media.tumblr.com/d65212d0050b2057686a31a3033377a4/9a5e59d4a20102aa-17/s75x75_c1/f537b0a0585d89556f1dfac7a609449e0dcd6813.gifv" style="vertical-align: middle; width: 25px;"/></p>
+                <h3>¿Que es Black Blood Terminal?</h3>
+                <p>Bueno...si tuviera que describir diria que solamente es una pagina estupida que hice porque estaba aburrido y escribire cosas que no tienen nada que ver una con la otra, y tambien me sirve para expresar ideas o simplemente desahogarme. Aqui no leeras mas que simplemente cualquier estupidez que decida escribir aqui(algo asi como un diario publico o yo que se), un saludo crack :v </p>
+                <h3>¿Esta pagina seguira viva?</h3>
+                <p>Nadie me pregunto pero...probablemente, que subire? pues nada (ayuda creo que estoy loco) en fin igual no es como que a alguien le importe esta pagina ni mucho menos su contenido</p>
+                <p><img src="https://i.pinimg.com/originals/30/c2/10/30c210344bbbcde4d5542c02a0cb908b.gif" class="transparent"/></p>
+            </div>
+            
+            <div id="specs" class="tab-content">
+                <h3>Toshiba Satellite C845</h3>
+                <p>> Procesador Intel Core I3 2328M 2.20GHz.</p>
+                <p>> 6GB de RAM DDR3</p>
+                <p>> Disco SSD 224GB</p>
+                <p>> Disco HDD 230GB</p>
+                <p>> Gráficos integrados Intel HD Graphics 3000</p>
+                <p>> Sistema Operativo: Windows 10</p>
+                <p style="color: #ffffff; font-weight: bold;">DONENME PARA UN LENOVO IDEAPAD SLIM 5 HIJOS DE PUTA >:v</p>
+                <h3> Lenovo IdeaPad Slim 5</h3>
+                <p>> Procesador: Hasta AMD Ryzen™ 7 7730U (8 núcleos, 16 hilos, hasta 4.5 GHz). También existen versiones con Ryzen™ 5 7530U.</p>
+                <p>> Gráficos: AMD Radeon™ Graphics integrados, Radeon™ 760M o Radeon™ 780M</p>
+                <p>> Memoria RAM: Hasta 16 GB DDR4-3200MHz</p>
+                <P>> Almacenamiento: SSD M.2 PCIe NVMe de hasta 1 TB (soporta tamaños 2242 y 2280)</P>
+                <p>> Tamaño: 16 pulgadas con relación de aspecto 16:10 (da más espacio vertical para trabajar).</p>
+                <p>> Resolución: * WUXGA (1920 x 1200) IPS, 300 nits, antirreflejo.> Opcional: 2.5K (2560 x 1600) IPS, 350 nits, 100% sRGB.</p>
+                <p>> Audio: 2 altavoces de 2W optimizados con Dolby Audio</p>
+                <p>> Cámara: FHD (1080p) con sensor infrarrojo (IR) para Windows Hello y obturador de privacidad.</p>
+                <h3>Conectividad y Puertos</h3>
+                <p>> 2 x USB-C 3.2 Gen 1 (función completa: datos, Power Delivery y DisplayPort)</p>
+                <p>> 2 x USB-A 3.2 Gen 1 (uno siempre activo para cargar dispositivos).</p>
+                <p>> 1 x HDMI 1.4b.</p>
+                <p>> Lector de tarjetas microSD.</p>
+                <p>> Combo jack (auriculares/micrófono) de 3.5mm.</p>
+                <p>> Inalámbrico: Wi-Fi 6 (802.11ax) 2x2 + Bluetooth® 5.1.</p>
+                <h3>Bateria</h3>
+                <p>> Batería: Integrada de 56.6Wh (soporta Rapid Charge Boost: 2 horas de uso con 15 min de carga).</p>
+                <p>> Dimensiones: 356 x 251 x 16.9 mm.</p>
+                <p>> Peso: Desde 1.89 kg.</p>
+                <p>¡Por favor solo quiero ser feliz! D:</p>
+                <img src="https://i.pinimg.com/originals/fd/b9/04/fdb904a449209df5f9525cdbf73b6789.gif" width="350" height="200" style="display: block; margin-top: 10px;"/>
+            </div>
+            
+            <div id="linux" class="tab-content">
+                <h3>Emuladores</h3>
+                <p><strong>† Game Boy Advance</strong><br>
+                Nombre: Pizza boy A<br>
+                Disp: <a href="https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboygba" target="_blank" style="color: #8b0000;">Google Play</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† PSP</strong><br>
+                Nombre: PPSSPP<br>
+                Disp: <a href="https://www.ppsspp.org/" target="_blank" style="color: #8b0000;">Web Oficial</a> / <a href="https://play.google.com/store/apps/details?id=org.ppsspp.ppsspp" target="_blank" style="color: #8b0000;">Gratis</a> / <a href="https://play.google.com/store/apps/details?id=org.ppsspp.ppssppgold" target="_blank" style="color: #8b0000;">Gold</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† Nintendo DS</strong><br>
+                Nombre: MelonDS<br>
+                Disp: <a href="https://github.com/rafaelvcaetano/melonDS-android/releases/tag/beta-1.9.3" target="_blank" style="color: #8b0000;">GitHub Release</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† PS Vita</strong><br>
+                Nombre: Vita3K<br>
+                Disp: <a href="https://vita3k.org/" target="_blank" style="color: #8b0000;">Web Oficial</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† Nintendo 64</strong><br>
+                Nombre: M64 Plus FZ<br>
+                Disp: <a href="https://play.google.com/store/apps/details?id=org.mupen64plusae.v3.fzurita" target="_blank" style="color: #8b0000;">Google Play</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† PS1</strong><br>
+                Nombre: DuckStation / ePSXe<br>
+                Disp: <a href="https://play.google.com/store/apps/details?id=com.github.stenzek.duckstation" target="_blank" style="color: #8b0000;">DuckStation</a> / <a href="https://play.google.com/store/apps/details?id=com.epsxe.ePSXe" target="_blank" style="color: #8b0000;">ePSXe (Pago)</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† PS2</strong><br>
+                Nombre: Aethersx2<br>
+                Disp: <a href="https://aethersx2.net/" target="_blank" style="color: #8b0000;">Aethersx2 Web</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† GameCube & Wii</strong><br>
+                Nombre: Dolphin<br>
+                Disp: <a href="https://play.google.com/store/apps/details?id=org.dolphinemu.dolphinemu" target="_blank" style="color: #8b0000;">Google Play</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† Nintendo Switch</strong><br>
+                Nombre: Suyu / Sudachi<br>
+                Disp: <a href="https://github.com/suyu-emulator/Suyu/releases" target="_blank" style="color: #8b0000;">Suyu</a> / <a href="https://sudachiemu.com/home/" target="_blank" style="color: #8b0000;">Sudachi</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† Nintendo 3DS</strong><br>
+                Nombre: Citra / Lime3DS<br>
+                Disp: <a href="https://citra-emulator.com/" target="_blank" style="color: #8b0000;">Citra</a> / <a href="https://github.com/Lime3DS/Lime3DS/releases" target="_blank" style="color: #8b0000;">Lime3DS</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† Windows (x86)</strong><br>
+                Nombre: Winlator<br>
+                Disp: <a href="https://winlator.org/" target="_blank" style="color: #8b0000;">Web Oficial</a></p>
+                <p><strong>† Lemuroid (All-in-One)</strong><br>
+                Soporta: NES, SNES, GB/GBC/GBA, N64, PSX, PSP, NDS, 3DS, Atari (2600, 7800, Lynx), Sega (Genesis, CD, Master System, Game Gear), Arcade (FB Neo), PC Engine, Neo Geo Pocket, WonderSwan.<br>
+                Disp: <a href="https://play.google.com/store/apps/details?id=com.swordfish.lemuroid" target="_blank" style="color: #8b0000;">Google Play</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† Tiny Emulator</strong><br>
+                Soporta: Arcade (Neo Geo, Capcom, PGM, Konami), NES, SNES, Sega (Master System, Genesis, Game Gear), GB Classic, GBC, GBA, NDS.<br>
+                Disp: <a href="https://tinyemulator.com/" target="_blank" style="color: #8b0000;">Google Play</a></p>
+                <p><strong>† Nintendo Switch ROMs</strong><br>
+                Source: EggNS Emulator Database<br>
+                Link: <a href="https://eggnsemulator.com/home/" target="_blank" style="color: #8b0000;">Acceder al Repositorio</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† PS2 ISO Archive</strong><br>
+                Source: GamesGX<br>
+                Link: <a href="https://www.gamesgx.net/" target="_blank" style="color: #8b0000;">Descargar ISOs</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† 3DS Decrypted ROMs</strong><br>
+                Source: Citra ROMs Portal<br>
+                Link: <a href="https://citra-emulator.com/3ds-roms/" target="_blank" style="color: #8b0000;">Explorar Librería</a></p>
+                <p><strong>† Drivers Qualcomm y Mesa Turnip Mediatek:</strong><br>
+                Source: Drives para Suyu<br>
+                Link: <a href="https://github.com/K11MCH1/AdrenoToolsDrivers/releases?page=5" target="_blank">Ver Drivers en GitHub</a></p>
+                <p style="font-size: 0.8em; color: #444; margin-top: 15px; text-align: center;">
+                    [ ADVERTENCIA: Manipular estos archivos puede aumentar el cortisol si los links se caen. Procede bajo tu propio riesgo. ]
+                </p>
+            </div>
+            
+            <div id="arduino" class="tab-content">
+                <h3>APK's_CORE</h3>
+                <p>Solo en el caso de que te interese aqui hay algunas aplicaciones que suelo usar </p>
+                <p><strong>† Multimedia Downloader: Seal</strong><br>
+                Baneada de la Play Store. Capaz de descargar contenido de casi cualquier red social.<br>
+                Source: <a href="https://github.com/JunkFood02/Seal" target="_blank" style="color: #8b0000;">GitHub Repository</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† Music Player: Poweramp</strong><br>
+                Ajustes de audio avanzados y ecualizador.<br>
+                Disp: <a href="https://play.google.com/store/search?q=poweramp&c=apps" target="_blank" style="color: #8b0000;">Google Play</a> / <a href="https://www.mediafire.com/file/td5wb1lfnwhfh16/Poweramp_build-955-uni_%28com.maxmpz.audioplayer%29.apk/file?dkey=0j18whl4l8k&r=1719" target="_blank" style="color: #8b0000;">Versión Unlocked</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† Music Player: Muzio Player</strong><br>
+                Soporta MP3/MP4. <span style="color: #666; font-size: 0.8em;">* Tip: Usa el DNS <b>DNS.ADGUARD.COM</b></span><br>
+                Disp: <a href="https://play.google.com/store/search?q=muzio+player&c=apps" target="_blank" style="color: #8b0000;">Google Play</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† Music Player: Pixel Player</strong><br>
+                Ligero y sin anuncios.<br>
+                Source: <a href="https://github.com/theovilardo/PixelPlayer" target="_blank" style="color: #8b0000;">GitHub Page</a></p>
+                <p><strong>† Noutube: Noutube</strong><br>
+                Una apliacion ligera para ver youtube sin anuncios.<br>
+                Source: <a href="https://github.com/nonbili/NouTube" target="_blank" style="color: #8b0000;">GitHub Page</a></p>
+                <br>
+                <hr style="border: 1px double #301934;">
+                <h3>No sé muy bien cómo lidiar con las interacciones, pero si necesitas encontrarme en otros rincones de la red, aquí tienes las coordenadas. No garantizo una respuesta rápida, mi cortisol tiene prioridad....</h3>
+                <p style="color: #4b0082; font-weight: bold;">[ GAMING_CORES ]</p>
+                <p>† **Steam:** <a href="https://steamcommunity.com/profiles/76561199310054069/" target="_blank" style="color: #8b0000;">Crashimo / Crona</a></p>
+                <p>† **RetroAchievements:** <a href="https://retroachievements.org/user/Crashimo" target="_blank" style="color: #8b0000;">Hunt Log</a></p>
+                <p>† **Osu!:** <a href="https://osu.ppy.sh/users/34940855" target="_blank" style="color: #8b0000;">Click the Circles</a></p>
+                <p>† **Roblox:** <a href="https://www.roblox.com/es/users/1859062902/profile" target="_blank" style="color: #8b0000;">Profile Data</a></p>
+                <p>† **Chess.com:** <a href="https://www.chess.com/member/crashimo" target="_blank" style="color: #8b0000;">Mental Strategy</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p style="color: #4b0082; font-weight: bold;">[ MODDING_&_DEV ]</p>
+                <p>† **GameBanana:** <a href="https://gamebanana.com/members/4964788" target="_blank" style="color: #8b0000;">Assets & Mods</a></p>
+                <p>† **NexusMods:** <a href="https://www.nexusmods.com/profile/Crashimo80" target="_blank" style="color: #8b0000;">Nexus Profile</a></p>
+                <p>† **GTAinside:** <a href="https://www.gtainside.com/user/Crashimo" target="_blank" style="color: #8b0000;">San Andreas Archives</a></p>
+                <p>† **Donut Team:** <a href="https://donutteam.com/@crashimo" target="_blank" style="color: #8b0000;">Simpsons Modding</a></p>
+                <p>† **Itch.io:** <a href="https://crashimo90.itch.io/" target="_blank" style="color: #8b0000;">Indie Projects</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p style="color: #4b0082; font-weight: bold;">[ SOCIAL_VOIDS ]</p>
+                <p>† **SpaceHey:** <a href="https://spacehey.com/profile?id=2619749" target="_blank" style="color: #8b0000;">SpaceHey (MySpace Clone)</a></p>
+                <p>† **Bluesky:** <a href="https://bsky.app/profile/crashimo.bsky.social" target="_blank" style="color: #8b0000;">The Blue Sky Void</a></p>
+                <p>† **Reddit:** <a href="https://www.reddit.com/user/crashimo/" target="_blank" style="color: #8b0000;">u/crashimo</a></p>
+                <p>† **YouTube:** <a href="https://www.youtube.com/@Crashimo" target="_blank" style="color: #8b0000;">Visual Logs</a></p>
+                <br>
+                <div style="text-align: center; border-top: 1px double #301934; padding-top: 10px; margin-top: 20px;">
+                    <p style="font-size: 0.7em; color: #444; letter-spacing: 1px;">
+                        © 2026 BLACK BLOOD TERMINAL. TODOS LOS DERECHOS RESERVADOS. <br>
+                        Cualquier intento de copia será procesado por el Intel i3 de 2da generación.
+                    </p>
+                    <div style="display: inline-block; border: 1px solid #301934; padding: 2px 8px; background-color: #000;">
+                        <span style="color: #8b0000; font-family: 'Courier New', monospace; font-size: 0.8em;">
+                            VISITANTES: [ 00000666 ]
+                        </span>
+                    </div>
+                    <p style="font-size: 0.6em; color: #222; margin-top: 5px;">
+                        Producido bajo los efectos del Cortisol y la falta de sueño.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener("load", function() {
+            setTimeout(() => {
+                document.getElementById("initial-loader").style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById("initial-loader").style.display = "none";
+                    document.getElementById("troll-screen").style.display = "flex";
+                    setTimeout(() => {
+                        document.getElementById("troll-screen").style.opacity = "0";
+                        setTimeout(() => {
+                            document.getElementById("troll-screen").style.display = "none";
+                            document.getElementById("warning-screen").style.display = "flex";
+                        }, 500);
+                    }, 2200);
+                }, 500);
+            }, 2500);
+        });
+
+        function enterProfile() {
+            const audio = document.getElementById("perfil-audio");
+            audio.volume = 0.5;
+            audio.play();
+            document.getElementById("warning-screen").style.opacity = "0";
+            setTimeout(() => {
+                document.getElementById("warning-screen").style.display = "none";
+                document.body.style.backgroundImage = "url('https://i.pinimg.com/564x/47/6c/0b/476c0b401012ea57c0fb793b396598db.jpg')";
+                document.body.style.backgroundAttachment = "fixed";
+                // Ajuste de borde para móvil para que no coma pantalla
+                const isMobile = window.innerWidth < 600;
+                document.body.style.border = isMobile ? "10px solid #000" : "25px solid #000";
+                document.body.style.borderImage = "linear-gradient(to right, #000 50%, #333 50%) 1";
+                const perfil = document.getElementById("perfil-main");
+                perfil.style.visibility = "visible";
+                perfil.style.opacity = "1";
+                const bats = document.querySelectorAll('.snowflake');
+                bats.forEach(bat => bat.style.display = "block");
+            }, 600);
+        }
+
+        function showTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

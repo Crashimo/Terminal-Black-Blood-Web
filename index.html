@@ -5,14 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>† BLACK BLOOD TERMINAL †</title>
     
-    <meta name="description" content="Protocolo de acceso: Diario personal y base de datos de Crashimo. Estética Dark/Emo, emulación y archivos del sistema.">
-
-<meta name="keywords" content="Crashimo, Black Blood, Terminal, Emo Aesthetics, Dark Web Design, Emuladores, Retro Gaming, Diario Personal, Estética 2000s">
-
-<meta property="og:title" content="† BLACK BLOOD TERMINAL †">
-<meta property="og:description" content="[ACCESO RESTRINGIDO] - Explorando la sombra.">
-<meta property="og:type" content="website">
-    
     <link rel="icon" type="image/gif" href="https://i10.glitter-graphics.org/pub/864/864430nt3rjqlypa.gif">
     
     <style>
@@ -79,7 +71,10 @@
         
         /* Ajuste de pestañas para móvil */
         .tabs-container { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; margin-top: 10px; }
-        .tab { background-color: #000; color: #fff; padding: 8px 15px; border: 1px solid #301934; font-weight: bold; flex: 1 1 auto; cursor: pointer; }
+        .tab { background-color: #000; color: #fff; padding: 8px 15px; border: 1px solid #301934; font-weight: bold; flex: 1 1 auto; cursor: pointer; cursor: crosshair;
+    transition: all 0.3s ease; }
+        .tab:hover { background-color: #1a0d1c !important; /* <--- Se oscurece al pasar el mouse */
+    border-color: #441464c7;               /* <--- Opcional: el borde se pone rojo */  }
         .tab.active { background-color: #301934; }
         
         #display-area { 
@@ -101,6 +96,52 @@
             #display-area { padding: 10px; }
             .tab { font-size: 0.8em; padding: 10px 5px; }
         }
+
+        /* Estilo del fondo oscuro detrás de la ventana */
+.modal {
+    display: none; /* Escondido por defecto */
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.9); /* Fondo negro traslúcido */
+}
+
+/* La cajita del mensaje */
+.modal-content {
+    background-color: #000;
+    margin: 15% auto;
+    padding: 20px;
+    border: 2px solid #301934;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+    color: #fff;
+    font-family: monospace;
+}
+
+.warning-text {
+    color: #ff0000; /* Texto en rojo para que resalte el peligro xd */
+    border: 1px dashed #ff0000;
+    padding: 10px;
+    margin: 15px 0;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.button-cancel {
+    background-color: #000; color: #fff; padding: 8px 15px; border: 1px solid #301934; font-weight: bold; flex: 1 1 auto; cursor: pointer; cursor: crosshair;
+    transition: all 0.3s ease;text-decoration: underline;
+    
+}
+.button-cancel:hover { background-color: #1a0d1c !important; /* <--- Se oscurece al pasar el mouse */
+    border-color: #441464c7;               /* <--- Opcional: el borde se pone rojo */  }
+
+
     </style>
 </head>
 <body>
@@ -108,6 +149,12 @@
     <audio id="perfil-audio" loop>
         <source src="https://files.catbox.moe/k1yw68.mp3" type="audio/mpeg">
     </audio>
+
+
+    <audio id="snesClick" src="https://files.catbox.moe/hgafe2.mp3" preload="auto"></audio>
+
+    <audio id="snesCancel" src="https://files.catbox.moe/shr7ki.mp3" preload="auto"></audio>
+
 
     <div class="snowflakes">
         <div class="snowflake"><img src="https://64.media.tumblr.com/c976c1f0110dff524dead5bde74dd5df/09b0656ab042c182-ac/s75x75_c1/888d378a91f5776307c5c5633ed9c5c7e094b4e5.gifv"></div>
@@ -144,7 +191,10 @@
         <div id="display-area">
             <div id="inicio" class="tab-content active">
                 <h3>Nadie escucha... solo el zumbido de mi Intel I3...Bienvenido al vacio</h3>
-                <p>Hola a todos, bienvenidos a Black Blood Terminal esta es una pequeña pagina que cree porque me aburri y necesitaba bajar mis niveles de Cortisol. Por favor no leer o tomar en cuenta nada de lo que esta en esta pagina la mayoria de cosas estan escritas en un sentido de humor. <img src="https://64.media.tumblr.com/d65212d0050b2057686a31a3033377a4/9a5e59d4a20102aa-17/s75x75_c1/f537b0a0585d89556f1dfac7a609449e0dcd6813.gifv" style="vertical-align: middle; width: 25px;"/></p>
+                <p> Bienvenido a † BLACK BLOOD TERMINAL †.
+                    Guardando lo que no quiero perder. He creado este rincón para tener a mano todos esos links,
+                    soluciones y emuladores que siempre se terminan perdiendo en mi memoria.<img src="https://64.media.tumblr.com/d65212d0050b2057686a31a3033377a4/9a5e59d4a20102aa-17/s75x75_c1/f537b0a0585d89556f1dfac7a609449e0dcd6813.gifv" style="vertical-align: middle; width: 25px;"/></p>
+                    <p>"La memoria es una función que requiere esfuerzo, el olvido es el estado natural."</p>
                 <h3>¿Que es Black Blood Terminal?</h3>
                 <p>Bueno...si tuviera que describir diria que solamente es una pagina estupida que hice porque estaba aburrido y escribire cosas que no tienen nada que ver una con la otra, y tambien me sirve para expresar ideas o simplemente desahogarme. Aqui no leeras mas que simplemente cualquier estupidez que decida escribir aqui(algo asi como un diario publico o yo que se), un saludo crack :v </p>
                 <h3>¿Esta pagina seguira viva?</h3>
@@ -186,71 +236,96 @@
             </div>
             
             <div id="linux" class="tab-content">
-                <h3>Emuladores</h3>
+                <h3>Emuladores/Android</h3>
                 <p><strong>† Game Boy Advance</strong><br>
                 Nombre: Pizza boy A<br>
-                Disp: <a href="https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboygba" target="_blank" style="color: #8b0000;">Google Play</a></p>
+                Disp: <a href="https://play.google.com/store/apps/details?id=it.dbtecno.pizzaboygba" class="link-externo" target="_blank" style="color: #8b0000;">Google Play</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p><strong>† PSP</strong><br>
                 Nombre: PPSSPP<br>
-                Disp: <a href="https://www.ppsspp.org/" target="_blank" style="color: #8b0000;">Web Oficial</a> / <a href="https://play.google.com/store/apps/details?id=org.ppsspp.ppsspp" target="_blank" style="color: #8b0000;">Gratis</a> / <a href="https://play.google.com/store/apps/details?id=org.ppsspp.ppssppgold" target="_blank" style="color: #8b0000;">Gold</a></p>
+                Disp: <a href="https://www.ppsspp.org/" class="link-externo" target="_blank" style="color: #8b0000;">Web Oficial</a> / <a href="https://play.google.com/store/apps/details?id=org.ppsspp.ppsspp" class="link-externo" target="_blank" style="color: #8b0000;">Gratis</a> / <a href="https://play.google.com/store/apps/details?id=org.ppsspp.ppssppgold" class="link-externo" target="_blank" style="color: #8b0000;">Gold</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p><strong>† Nintendo DS</strong><br>
                 Nombre: MelonDS<br>
-                Disp: <a href="https://github.com/rafaelvcaetano/melonDS-android/releases/tag/beta-1.9.3" target="_blank" style="color: #8b0000;">GitHub Release</a></p>
+                Disp: <a href="https://github.com/rafaelvcaetano/melonDS-android/releases/tag/beta-1.9.3" class="link-externo" target="_blank" style="color: #8b0000;">GitHub Release</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p><strong>† PS Vita</strong><br>
                 Nombre: Vita3K<br>
-                Disp: <a href="https://vita3k.org/" target="_blank" style="color: #8b0000;">Web Oficial</a></p>
+                Disp: <a href="https://vita3k.org/" class="link-externo" target="_blank" style="color: #8b0000;">Web Oficial</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p><strong>† Nintendo 64</strong><br>
                 Nombre: M64 Plus FZ<br>
-                Disp: <a href="https://play.google.com/store/apps/details?id=org.mupen64plusae.v3.fzurita" target="_blank" style="color: #8b0000;">Google Play</a></p>
+                Disp: <a href="https://play.google.com/store/apps/details?id=org.mupen64plusae.v3.fzurita" class="link-externo" target="_blank" style="color: #8b0000;">Google Play</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p><strong>† PS1</strong><br>
                 Nombre: DuckStation / ePSXe<br>
-                Disp: <a href="https://play.google.com/store/apps/details?id=com.github.stenzek.duckstation" target="_blank" style="color: #8b0000;">DuckStation</a> / <a href="https://play.google.com/store/apps/details?id=com.epsxe.ePSXe" target="_blank" style="color: #8b0000;">ePSXe (Pago)</a></p>
+                Disp: <a href="https://play.google.com/store/apps/details?id=com.github.stenzek.duckstation" class="link-externo" target="_blank" style="color: #8b0000;">DuckStation</a> / <a href="https://play.google.com/store/apps/details?id=com.epsxe.ePSXe" class="link-externo" target="_blank" style="color: #8b0000;">ePSXe (Pago)</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p><strong>† PS2</strong><br>
                 Nombre: Aethersx2<br>
-                Disp: <a href="https://aethersx2.net/" target="_blank" style="color: #8b0000;">Aethersx2 Web</a></p>
+                Disp: <a href="https://aethersx2.net/" class="link-externo" target="_blank" style="color: #8b0000;">Aethersx2 Web</a></p>
                 <hr style="border: 0.5px solid #301934;">
-                <p><strong>† GameCube & Wii</strong><br>
-                Nombre: Dolphin<br>
-                Disp: <a href="https://play.google.com/store/apps/details?id=org.dolphinemu.dolphinemu" target="_blank" style="color: #8b0000;">Google Play</a></p>
+                <p><strong>† GameCube / Wii</strong><br>
+                Nombre: Dolphin / Dolphin MMJ<br>
+                Disp: <a href="https://play.google.com/store/apps/details?id=org.dolphinemu.dolphinemu" class="link-externo" target="_blank" style="color: #8b0000;">Google Play</a> / <a href="https://github.com/Medard22/Dolphin-MMJR2-VBI/releases" class="link-externo" target="_blank" style="color: #8b0000;">Dolphin MMJ</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p><strong>† Nintendo Switch</strong><br>
                 Nombre: Suyu / Sudachi<br>
-                Disp: <a href="https://github.com/suyu-emulator/Suyu/releases" target="_blank" style="color: #8b0000;">Suyu</a> / <a href="https://sudachiemu.com/home/" target="_blank" style="color: #8b0000;">Sudachi</a></p>
+                Disp: <a href="https://github.com/suyu-emulator/Suyu/releases" class="link-externo" target="_blank" style="color: #8b0000;">Suyu</a> / <a href="https://sudachiemu.com/home/" class="link-externo" target="_blank" style="color: #8b0000;">Sudachi</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p><strong>† Nintendo 3DS</strong><br>
                 Nombre: Citra / Lime3DS<br>
-                Disp: <a href="https://citra-emulator.com/" target="_blank" style="color: #8b0000;">Citra</a> / <a href="https://github.com/Lime3DS/Lime3DS/releases" target="_blank" style="color: #8b0000;">Lime3DS</a></p>
+                Disp: <a href="https://citra-emulator.com/" class="link-externo" target="_blank" style="color: #8b0000;">Citra</a> / <a href="https://github.com/Lime3DS/Lime3DS/releases" class="link-externo" target="_blank" style="color: #8b0000;">Lime3DS</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p><strong>† Windows (x86)</strong><br>
                 Nombre: Winlator<br>
-                Disp: <a href="https://winlator.org/" target="_blank" style="color: #8b0000;">Web Oficial</a></p>
+                Disp: <a href="https://winlator.org/" class="link-externo" target="_blank" style="color: #8b0000;">Web Oficial</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <h3>Multi-emuladores/Android</h3>
                 <p><strong>† Lemuroid (All-in-One)</strong><br>
                 Soporta: NES, SNES, GB/GBC/GBA, N64, PSX, PSP, NDS, 3DS, Atari (2600, 7800, Lynx), Sega (Genesis, CD, Master System, Game Gear), Arcade (FB Neo), PC Engine, Neo Geo Pocket, WonderSwan.<br>
-                Disp: <a href="https://play.google.com/store/apps/details?id=com.swordfish.lemuroid" target="_blank" style="color: #8b0000;">Google Play</a></p>
+                Disp: <a href="https://play.google.com/store/apps/details?id=com.swordfish.lemuroid" class="link-externo" target="_blank" style="color: #8b0000;">Google Play</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p><strong>† Tiny Emulator</strong><br>
                 Soporta: Arcade (Neo Geo, Capcom, PGM, Konami), NES, SNES, Sega (Master System, Genesis, Game Gear), GB Classic, GBC, GBA, NDS.<br>
-                Disp: <a href="https://tinyemulator.com/" target="_blank" style="color: #8b0000;">Google Play</a></p>
+                Disp: <a href="https://tinyemulator.com/" class="link-externo" target="_blank" style="color: #8b0000;">Google Play</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <h3>Pagina de ROM's</h3>
                 <p><strong>† Nintendo Switch ROMs</strong><br>
                 Source: EggNS Emulator Database<br>
-                Link: <a href="https://eggnsemulator.com/home/" target="_blank" style="color: #8b0000;">Acceder al Repositorio</a></p>
+                Link: <a href="https://eggnsemulator.com/home/" class="link-externo" target="_blank" style="color: #8b0000;">Acceder al Repositorio</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p><strong>† PS2 ISO Archive</strong><br>
                 Source: GamesGX<br>
-                Link: <a href="https://www.gamesgx.net/" target="_blank" style="color: #8b0000;">Descargar ISOs</a></p>
+                Link: <a href="https://www.gamesgx.net/" class="link-externo" target="_blank" style="color: #8b0000;">Descargar ISOs</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p><strong>† 3DS Decrypted ROMs</strong><br>
                 Source: Citra ROMs Portal<br>
-                Link: <a href="https://citra-emulator.com/3ds-roms/" target="_blank" style="color: #8b0000;">Explorar Librería</a></p>
+                Link: <a href="https://citra-emulator.com/3ds-roms/" class="link-externo" target="_blank" style="color: #8b0000;">Explorar Librería</a></p>
+                <hr style="border: 0.5px solid #301934;">
                 <p><strong>† Drivers Qualcomm y Mesa Turnip Mediatek:</strong><br>
                 Source: Drives para Suyu<br>
-                Link: <a href="https://github.com/K11MCH1/AdrenoToolsDrivers/releases?page=5" target="_blank">Ver Drivers en GitHub</a></p>
+                Link: <a href="https://github.com/K11MCH1/AdrenoToolsDrivers/releases?page=5" class="link-externo" target="_blank">Ver Drivers en GitHub</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <h3>Emuladores/PC</h3>
+                <p><strong>† Super Nintendo</strong><br>
+                Nombre: Bsnes / Snes9x<br>
+                Link: <a href="https://bsnes.org/" class="link-externo" target="_blank" style="color: #8b0000;"> Bsnes</a> / <a href="https://www.snes9x.com/" class="link-externo" target="_blank" style="color: #8b0000;">Snes9x</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† PS1</strong><br>
+                Nombre: DuckStation<br>
+                Disp: <a href="https://www.duckstation.org/" class="link-externo" target="_blank" style="color: #8b0000;">DuckStation</a>
+                <hr style="border: 0.5px solid #301934;">
+                <p><strong>† PlayStation 2</strong><br>
+                Nombre: PCSX2<br>
+                Link: <a href="https://pcsx2.net/" class="link-externo" target="_blank" style="color: #8b0000;">PCSX2 Web</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                    <p><strong>† GameCube / Wii</strong><br>
+                Nombre: Dolphin Emulator<br>
+                Link: <a href="https://es.dolphin-emu.org/?cr=es" class="link-externo" target="_blank" style="color: #8b0000;">Dolphin</a></p>
+                <hr style="border: 0.5px solid #301934;">
+                <p>La verdad recomendaria mucho el que si no sabes manejar o configurar emuladores, veas videos de como hacer esto, sino te vas a tirar 4 horas sin  saber que hacer y pues...que dolor de cabeza</p> <br>
+                <img src="https://i.pinimg.com/originals/ad/84/2f/ad842f6baa87dc197dc57fb82442526a.gif" alt="un GIF bien good de Crona :v" width="300" height="auto">
                 <p style="font-size: 0.8em; color: #444; margin-top: 15px; text-align: center;">
                     [ ADVERTENCIA: Manipular estos archivos puede aumentar el cortisol si los links se caen. Procede bajo tu propio riesgo. ]
                 </p>
@@ -261,48 +336,49 @@
                 <p>Solo en el caso de que te interese aqui hay algunas aplicaciones que suelo usar </p>
                 <p><strong>† Multimedia Downloader: Seal</strong><br>
                 Baneada de la Play Store. Capaz de descargar contenido de casi cualquier red social.<br>
-                Source: <a href="https://github.com/JunkFood02/Seal" target="_blank" style="color: #8b0000;">GitHub Repository</a></p>
+                Source: <a href="https://github.com/JunkFood02/Seal" class="link-externo" target="_blank" style="color: #8b0000;">GitHub Repository</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p><strong>† Music Player: Poweramp</strong><br>
                 Ajustes de audio avanzados y ecualizador.<br>
-                Disp: <a href="https://play.google.com/store/search?q=poweramp&c=apps" target="_blank" style="color: #8b0000;">Google Play</a> / <a href="https://www.mediafire.com/file/td5wb1lfnwhfh16/Poweramp_build-955-uni_%28com.maxmpz.audioplayer%29.apk/file?dkey=0j18whl4l8k&r=1719" target="_blank" style="color: #8b0000;">Versión Unlocked</a></p>
+                Disp: <a href="https://play.google.com/store/search?q=poweramp&c=apps" class="link-externo" target="_blank" style="color: #8b0000;">Google Play</a> / <a href="https://www.mediafire.com/file/td5wb1lfnwhfh16/Poweramp_build-955-uni_%28com.maxmpz.audioplayer%29.apk/file?dkey=0j18whl4l8k&r=1719" class="link-externo" target="_blank" style="color: #8b0000;">Versión Unlocked</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p><strong>† Music Player: Muzio Player</strong><br>
                 Soporta MP3/MP4. <span style="color: #666; font-size: 0.8em;">* Tip: Usa el DNS <b>DNS.ADGUARD.COM</b></span><br>
-                Disp: <a href="https://play.google.com/store/search?q=muzio+player&c=apps" target="_blank" style="color: #8b0000;">Google Play</a></p>
+                Disp: <a href="https://play.google.com/store/search?q=muzio+player&c=apps" class="link-externo" target="_blank" style="color: #8b0000;">Google Play</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p><strong>† Music Player: Pixel Player</strong><br>
                 Ligero y sin anuncios.<br>
-                Source: <a href="https://github.com/theovilardo/PixelPlayer" target="_blank" style="color: #8b0000;">GitHub Page</a></p>
+                Source: <a href="https://github.com/theovilardo/PixelPlayer" class="link-externo" target="_blank" style="color: #8b0000;">GitHub Page</a></p>
                 <p><strong>† Noutube: Noutube</strong><br>
                 Una apliacion ligera para ver youtube sin anuncios.<br>
-                Source: <a href="https://github.com/nonbili/NouTube" target="_blank" style="color: #8b0000;">GitHub Page</a></p>
+                Source: <a href="https://github.com/nonbili/NouTube" class="link-externo" target="_blank" style="color: #8b0000;">GitHub Page</a></p>
                 <br>
                 <hr style="border: 1px double #301934;">
                 <h3>No sé muy bien cómo lidiar con las interacciones, pero si necesitas encontrarme en otros rincones de la red, aquí tienes las coordenadas. No garantizo una respuesta rápida, mi cortisol tiene prioridad....</h3>
                 <p style="color: #4b0082; font-weight: bold;">[ GAMING_CORES ]</p>
-                <p>† **Steam:** <a href="https://steamcommunity.com/profiles/76561199310054069/" target="_blank" style="color: #8b0000;">Crashimo / Crona</a></p>
-                <p>† **RetroAchievements:** <a href="https://retroachievements.org/user/Crashimo" target="_blank" style="color: #8b0000;">Hunt Log</a></p>
-                <p>† **Osu!:** <a href="https://osu.ppy.sh/users/34940855" target="_blank" style="color: #8b0000;">Click the Circles</a></p>
-                <p>† **Roblox:** <a href="https://www.roblox.com/es/users/1859062902/profile" target="_blank" style="color: #8b0000;">Profile Data</a></p>
-                <p>† **Chess.com:** <a href="https://www.chess.com/member/crashimo" target="_blank" style="color: #8b0000;">Mental Strategy</a></p>
+                <p>† **Steam:** <a href="https://steamcommunity.com/profiles/76561199310054069/" class="link-externo" target="_blank" style="color: #8b0000;">Crashimo / Crona</a></p>
+                <p>† **RetroAchievements:** <a href="https://retroachievements.org/user/Crashimo" class="link-externo" target="_blank" style="color: #8b0000;">Hunt Log</a></p>
+                <p>† **Osu!:** <a href="https://osu.ppy.sh/users/34940855" class="link-externo" target="_blank" style="color: #8b0000;">Click the Circles</a></p>
+                <p>† **Roblox:** <a href="https://www.roblox.com/es/users/1859062902/profile" class="link-externo" target="_blank" style="color: #8b0000;">Profile Data</a></p>
+                <p>† **Chess.com:** <a href="https://www.chess.com/member/crashimo" class="link-externo" target="_blank" style="color: #8b0000;">Mental Strategy</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p style="color: #4b0082; font-weight: bold;">[ MODDING_&_DEV ]</p>
-                <p>† **GameBanana:** <a href="https://gamebanana.com/members/4964788" target="_blank" style="color: #8b0000;">Assets & Mods</a></p>
-                <p>† **NexusMods:** <a href="https://www.nexusmods.com/profile/Crashimo80" target="_blank" style="color: #8b0000;">Nexus Profile</a></p>
-                <p>† **GTAinside:** <a href="https://www.gtainside.com/user/Crashimo" target="_blank" style="color: #8b0000;">San Andreas Archives</a></p>
-                <p>† **Donut Team:** <a href="https://donutteam.com/@crashimo" target="_blank" style="color: #8b0000;">Simpsons Modding</a></p>
-                <p>† **Itch.io:** <a href="https://crashimo90.itch.io/" target="_blank" style="color: #8b0000;">Indie Projects</a></p>
+                <p>† **GameBanana:** <a href="https://gamebanana.com/members/4964788" class="link-externo" target="_blank" style="color: #8b0000;">Assets & Mods</a></p>
+                <p>† **NexusMods:** <a href="https://www.nexusmods.com/profile/Crashimo80" class="link-externo" target="_blank" style="color: #8b0000;">Nexus Profile</a></p>
+                <p>† **GTAinside:** <a href="https://www.gtainside.com/user/Crashimo" class="link-externo" target="_blank" style="color: #8b0000;">San Andreas Archives</a></p>
+                <p>† **Donut Team:** <a href="https://donutteam.com/@crashimo" class="link-externo" target="_blank" style="color: #8b0000;">Simpsons Modding</a></p>
+                <p>† **Itch.io:** <a href="https://crashimo90.itch.io/" class="link-externo" target="_blank" style="color: #8b0000;">Indie Projects</a></p>
                 <hr style="border: 0.5px solid #301934;">
                 <p style="color: #4b0082; font-weight: bold;">[ SOCIAL_VOIDS ]</p>
-                <p>† **SpaceHey:** <a href="https://spacehey.com/profile?id=2619749" target="_blank" style="color: #8b0000;">SpaceHey (MySpace Clone)</a></p>
-                <p>† **Bluesky:** <a href="https://bsky.app/profile/crashimo.bsky.social" target="_blank" style="color: #8b0000;">The Blue Sky Void</a></p>
-                <p>† **Reddit:** <a href="https://www.reddit.com/user/crashimo/" target="_blank" style="color: #8b0000;">u/crashimo</a></p>
-                <p>† **YouTube:** <a href="https://www.youtube.com/@Crashimo" target="_blank" style="color: #8b0000;">Visual Logs</a></p>
+                <p>† **SpaceHey:** <a href="https://spacehey.com/profile?id=2619749" class="link-externo" target="_blank" style="color: #8b0000;">SpaceHey (MySpace Clone)</a></p>
+                <p>† **Bluesky:** <a href="https://bsky.app/profile/crashimo.bsky.social" class="link-externo" target="_blank" style="color: #8b0000;">The Blue Sky Void</a></p>
+                <p>† **Reddit:** <a href="https://www.reddit.com/user/crashimo/" class="link-externo" target="_blank" style="color: #8b0000;">u/crashimo</a></p>
+                <p>† **YouTube:** <a href="https://www.youtube.com/@Crashimo" class="link-externo" target="_blank" style="color: #8b0000;">Visual Logs</a></p>
+                <p>† **Vidlii:** <a href="https://www.vidlii.com/user/Crashimo" class="link-externo" target="_blank" style="color: #8b0000;">YT 2000's</a></p>
                 <br>
                 <div style="text-align: center; border-top: 1px double #301934; padding-top: 10px; margin-top: 20px;">
                     <p style="font-size: 0.7em; color: #444; letter-spacing: 1px;">
-                        © 2026 BLACK BLOOD TERMINAL. TODOS LOS DERECHOS RESERVADOS. <br>
+                        © 2026 BLACK BLOOD TERMINAL. TODOS LOS DERECHOS RESERVADOS. | v1.1.0<br>
                         Cualquier intento de copia será procesado por el Intel i3 de 2da generación.
                     </p>
                     <div style="display: inline-block; border: 1px solid #301934; padding: 2px 8px; background-color: #000;">
@@ -315,6 +391,19 @@
                     </p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="modal-warning" class="modal">
+    <div class="modal-content">
+        <h2>† ADVERTENCIA DE SEGURIDAD †</h2>
+        <p>Estás a punto de salir de la <strong>Black Blood Terminal</strong> para ir a un sitio externo.</p>
+        <p class="warning-text">No me hago responsable por virus, scripts maliciosos o daños en tu hardware/software fuera de este dominio.</p>
+        <p>¿Deseas continuar bajo tu propio riesgo?</p>
+        
+        <div class="modal-buttons">
+            <button id="btn-cancelar" class="button-cancel">VOLVER</button>
+            <a id="btn-continuar" href="#" target="_blank" class="tab">CONTINUAR</a>
         </div>
     </div>
 
@@ -366,5 +455,65 @@
             event.currentTarget.classList.add('active');
         }
     </script>
+
+    <script>
+    const modal = document.getElementById('modal-warning');
+    const btnContinuar = document.getElementById('btn-continuar');
+    const btnCancelar = document.getElementById('btn-cancelar');
+
+    // 1. Buscamos todos los links que tengan la clase "externo"
+    document.querySelectorAll('.link-externo').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault(); // Evita que el link se abra de una
+            const urlDestino = this.href;
+            btnContinuar.href = urlDestino; // Le pasamos el link al botón de continuar
+            modal.style.display = "block"; // Mostramos la ventana
+        });
+    });
+
+    // Cerrar si le dan a volver
+    btnCancelar.onclick = () => modal.style.display = "none";
+    
+    // Cerrar si hacen clic en el botón de continuar
+    btnContinuar.onclick = () => modal.style.display = "none";
+</script>
+
+<script>
+  // --- CONFIGURACIÓN DE SONIDOS ---
+  const sonidoConfirm = document.getElementById('snesClick');
+  const sonidoCancel = document.getElementById('snesCancel'); // Tu nuevo audio
+
+  // Ajustamos volúmenes
+  if(sonidoConfirm) sonidoConfirm.volume = 0.3;
+  if(sonidoCancel) sonidoCancel.volume = 0.3; 
+
+  // --- LÓGICA PARA CONFIRMAR (.tab) ---
+  const botonesTab = document.querySelectorAll('.tab');
+  botonesTab.forEach(boton => {
+    boton.addEventListener('click', () => {
+      sonidoConfirm.currentTime = 0;
+      sonidoConfirm.play().catch(error => console.log("Audio bloqueado"));
+    });
+  });
+
+  // --- LÓGICA PARA CANCELAR (.button-cancel) ---
+  const botonesCancel = document.querySelectorAll('.button-cancel');
+  botonesCancel.forEach(boton => {
+    boton.addEventListener('click', () => {
+      // 1. Sonido de cancelar
+      if(sonidoCancel) {
+        sonidoCancel.currentTime = 0;
+        sonidoCancel.play().catch(error => console.log("Audio bloqueado"));
+      }
+
+      // 2. Cerrar el modal (esto es lo que hace que el botón funcione)
+      const modal = document.getElementById('modal-warning');
+      if (modal) {
+        modal.style.display = "none";
+      }
+    });
+  });
+</script>
+
 </body>
 </html>

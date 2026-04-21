@@ -129,7 +129,7 @@
     const audio = document.getElementById('bgMusic');
     
     // Lo ponemos bajito para que sea ambiental (0.1 es el 10%)
-    audio.volume = 0.3;
+    audio.volume = 1.0;
 
     // EL TRUCO: Los navegadores no dejan sonar música sola.
     // La música empezará en cuanto el usuario haga clic en CUALQUIER PARTE de la página.
@@ -144,6 +144,7 @@
 <script>
     const btn = document.querySelector('.back-link');
     const sfx = document.getElementById('sfxBoton');
+    sonidoBoton.volume = 0.3;
 
     btn.addEventListener('click', (e) => {
         // Detenemos el salto inmediato para que dé tiempo a sonar
